@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ManejoPresupuesto.Models
 {
-    public class TipoCuenta : //IValidatableObject
+    public class TipoCuenta //:IValidatableObject
     {
         public int Id { get; set; }
 
