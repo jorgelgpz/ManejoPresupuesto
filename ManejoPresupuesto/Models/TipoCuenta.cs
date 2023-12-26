@@ -21,6 +21,7 @@ namespace ManejoPresupuesto.Models
         public int Edad { get; set; }
         [Url(ErrorMessage ="El campo debe ser una URL válida")]
         public string URL { get; set; }
+
         [CreditCard(ErrorMessage ="La tarjeta de crédito no es válida")]
         [Display(Name ="Tarjeta de Crédito")]
         public string TarjetaDeCredito { get; set; }/*4111111111111111*/
