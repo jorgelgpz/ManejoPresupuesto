@@ -7,7 +7,7 @@ using System.Data.Common;
 
 namespace ManejoPresupuesto.Controllers
 {
-    public class TiposCuentasController: Controller
+    public class TiposCuentasController : Controller
     {
         private readonly IRepositorioTiposCuentas repostorioTiposCuentas;
 
@@ -32,6 +32,16 @@ namespace ManejoPresupuesto.Controllers
 
 
             tipoCuenta.UsuarioId = 1;
+
+            var yaExisteTipoCuenta = await repostorioTiposCuentas.Existe(tipoCuenta.Nombre, tipoCuenta.UsuarioId);
+
+            if (yaExisteTipoCuenta)
+            {
+                ModelState.AddModelError(nameof(tipoCuenta.Nombre),
+                    $"El nombre {tipoCuenta.Nombre} ya exite.");
+                return View(tipoCuenta);
+            }
+
             await repostorioTiposCuentas.Crear(tipoCuenta);
 
 
