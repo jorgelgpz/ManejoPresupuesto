@@ -6,10 +6,13 @@ namespace ManejoPresupuesto.Servicios
 {
     public interface IRepositorioTiposCuentas
     {
+
         //asignaturas
         Task Crear(TipoCuenta tipoCuenta);
+        Task Actualizar(TipoCuenta tipoCuenta);
         Task<bool> Existe(string Nombre, int UsuarioId);
         Task<IEnumerable<TipoCuenta>> Obtener(int usuarioId);
+        Task<TipoCuenta> ObtenerPorId(int id, int usuarioId);
     }
     public class RepositorioTiposCuentas: IRepositorioTiposCuentas
     {
@@ -50,6 +53,24 @@ namespace ManejoPresupuesto.Servicios
             return await connection.QueryAsync<TipoCuenta>(@"SELECT Id, Nombre, Orden
                                                             FROM TiposCuentas
                                                             WHERE UsuarioId = @UsuarioId", new {usuarioId});
+        }
+
+        public async Task Actualizar (TipoCuenta tipoCuenta)
+        {
+            using var connection = new SqlConnection(connectionString);
+            //ExecuteAsync me permite realizar un consulta(query) sin que me retorne nada.
+            await connection.ExecuteAsync(@"UPDATE TiposCuentas
+                                            SET Nombre = @Nombre
+                                            WHERE Id = @Id",tipoCuenta);
+        }
+
+        public async Task<TipoCuenta> ObtenerPorId(int id, int usuarioId)
+        {
+            using var connection = new SqlConnection(connectionString);
+            return await connection.QueryFirstOrDefaultAsync<TipoCuenta>(@"SELECT Id, Nombre, Orden
+                                                                FROM TiposCuentas
+                                                                WHERE Id = @Id AND UsuarioId = @UsuarioId",
+                                                                new {id, usuarioId});
         }
     }
 }
