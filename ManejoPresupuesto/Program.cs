@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<IRepositorioTiposCuentas, RepositorioTiposCuentas>(); //transient porque nuestro repo no va a compartir datos entre distintas instancias
 builder.Services.AddTransient<IServicioUsuarios, ServicioUsuarios>();
-
+builder.Services.AddTransient<IRepositorioCuentas, RepositorioCuentas>();
 
 var app = builder.Build();
 

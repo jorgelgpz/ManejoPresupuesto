@@ -53,7 +53,7 @@ namespace ManejoPresupuesto.Servicios
         public async Task<IEnumerable<TipoCuenta>> Obtener(int usuarioId)
         {
             using var connection = new SqlConnection(connectionString);
-            
+            //Retorna todas cuentas del usuarioId
             return await connection.QueryAsync<TipoCuenta>(@"SELECT Id, Nombre, Orden
                                                             FROM TiposCuentas
                                                             WHERE UsuarioId = @UsuarioId
@@ -71,6 +71,7 @@ namespace ManejoPresupuesto.Servicios
 
         public async Task<TipoCuenta> ObtenerPorId(int id, int usuarioId)
         {
+            //Retorna una cuenta
             using var connection = new SqlConnection(connectionString);
             return await connection.QueryFirstOrDefaultAsync<TipoCuenta>(@"SELECT Id, Nombre, Orden
                                                                 FROM TiposCuentas
