@@ -48,7 +48,7 @@
     @foreach (var tipoCuenta in Model)
     {
         <div class="accordion-item">
-            
+
             <h2 class="accordion-header" id="cabeceraUno">
                 @{
                     var id = tipoCuenta.TipoCuenta.Replace(" ", "");
@@ -64,13 +64,21 @@
             </h2>
 
             <div id="@id" class="accordion-collapse collapse show">
-                <div>
+                <div> 
                     <ul class="list-group">
-                        @foreach(var cuenta in tipoCuenta.Cuentas)
+                        @foreach (var cuenta in tipoCuenta.Cuentas)
                         {
                             var claseCuenta = ObtenerClaseBalance(cuenta.Balance);
                             <li class="list-group-item">
-                                <span><strong>@cuenta.Nombre</strong></span>
+                                <span>
+                                    <strong>@cuenta.Nombre</strong>
+                                    <a asp-action="Editar" asp-route-id="@cuenta.Id" class="btn-primary btn">
+                                        <i class="bi-pencil-fill"></i>
+                                    </a>
+                                    <a class="btn-danger btn">
+                                        <i class="bi-trash-fill"></i>
+                                    </a>
+                                </span>
                                 <span class="@claseCuenta">@FormatearBalance(cuenta.Balance)</span>
                             </li>
                         }
