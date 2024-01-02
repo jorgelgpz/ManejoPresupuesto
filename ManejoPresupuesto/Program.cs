@@ -7,7 +7,9 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<IRepositorioTiposCuentas, RepositorioTiposCuentas>(); //transient porque nuestro repo no va a compartir datos entre distintas instancias
 builder.Services.AddTransient<IServicioUsuarios, ServicioUsuarios>();
 builder.Services.AddTransient<IRepositorioCuentas, RepositorioCuentas>();
+builder.Services.AddTransient<IRepositorioCategorias, RepositorioCategorias>();
 builder.Services.AddAutoMapper(typeof(Program));
+
 
 var app = builder.Build();
 
