@@ -17,10 +17,19 @@ namespace ManejoPresupuesto.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> Index()
+        {
+            var usuarioId = servicioUsuarios.ObtenerUsuarioId();
+            var categorias = await repositorioCategorias.Obtener(usuarioId);
+            return View(categorias);
+        }
+
+        [HttpGet]
         public IActionResult Crear()
         {
             return View();
         }
+
         [HttpPost]
         public async Task<IActionResult> Crear(Categoria categoria)
         {
