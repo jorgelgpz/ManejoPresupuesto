@@ -26,7 +26,7 @@ namespace ManejoPresupuesto.Servicios
                     transaccion.UsuarioId,
                     transaccion.FechaTransaccion,
                     transaccion.Monto,
-                    transaccion.CategorioId,
+                    transaccion.CategoriaId,
                     transaccion.CuentaId,
                     transaccion.Nota
                 },
