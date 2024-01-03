@@ -7,7 +7,5 @@ namespace ManejoPresupuesto.Models
     {
         public IEnumerable<SelectListItem> Categorias { get; set; }
         public IEnumerable<SelectListItem> Cuentas { get; set; }
-        [Display(Name = "Tipo Operación")]
-        public TipoOperacion TipoOperacionId { get; set; } = TipoOperacion.Ingreso;
     }
 }
