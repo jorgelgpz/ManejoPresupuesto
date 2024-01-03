@@ -9,11 +9,14 @@ namespace ManejoPresupuesto.Controllers
     {
         private readonly IServicioUsuarios servicioUsuarios;
         private readonly IRepositorioCuentas repositorioCuentas;
+        private readonly IRepositorioCategorias repositorioCategorias;
 
-        public TransaccionesController(IServicioUsuarios servicioUsuarios, IRepositorioCuentas repositorioCuentas)
+        public TransaccionesController(IServicioUsuarios servicioUsuarios, IRepositorioCuentas repositorioCuentas,
+            IRepositorioCategorias repositorioCategorias)
         {
             this.servicioUsuarios = servicioUsuarios;
             this.repositorioCuentas = repositorioCuentas;
+            this.repositorioCategorias = repositorioCategorias;
         }
         public IActionResult Index()
         {
@@ -25,7 +28,7 @@ namespace ManejoPresupuesto.Controllers
             var usuarioId = servicioUsuarios.ObtenerUsuarioId();
             var modelo = new TransaccionCreacionViewModel();
             modelo.Cuentas = await ObtenerCuentas(usuarioId);
-
+            modelo.Categorias = await ObtenerCategorias(usuarioId, modelo.TipoOperacionId);
             return View(modelo);
         }
 
@@ -33,6 +36,20 @@ namespace ManejoPresupuesto.Controllers
         {
             var cuentas = await repositorioCuentas.Buscar(usuarioId);
             return cuentas.Select(x => new SelectListItem(x.Nombre, x.Id.ToString()));
+        }
+
+        private async Task<IEnumerable<SelectListItem>> ObtenerCategorias(int usuarioId, TipoOperacion tipoOperacion)
+        {
+            var categorias = await repositorioCategorias.Obtener(usuarioId, tipoOperacion);//este método hay que crearlo
+            return categorias.Select(x => new SelectListItem(x.Nombre, x.Id.ToString()));
+        }
+
+        public async Task<IActionResult> ObtenerCategorias([FromBody] TipoOperacion tipoOperacion)
+        {
+            var usuarioId = servicioUsuarios.ObtenerUsuarioId();
+            //luego creo un método privado para obtener las categorias "ObtenerCategorias"
+            var categorias = await ObtenerCategorias(usuarioId, tipoOperacion);
+            return Ok(categorias);
         }
     }
 }
