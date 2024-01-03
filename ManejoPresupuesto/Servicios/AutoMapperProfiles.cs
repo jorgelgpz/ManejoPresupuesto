@@ -9,6 +9,7 @@ namespace ManejoPresupuesto.Servicios
         {
 
             CreateMap<Cuenta, CuentaCreacionViewModel>();
+            CreateMap<TransaccionActualizacionViewModel, Transaccion>().ReverseMap();//me permite tener mapeo en ambas direcciones
         }
     }
 }
